@@ -1,11 +1,10 @@
 import TestComponentFirst from '@/components/test-component-first';
 import TestComponentSecond from '@/components/test-component-second';
-import TestComponentThird from '@/components/test-component-third';
 import { Suspense } from 'react';
 
 export const dynamic = 'force-dynamic';
 
-export default function Home() {
+export default function Profile() {
   return (
     <main className=" flex flex-col gap-2 ">
       <Suspense fallback={<h2>Loading...</h2>}>
@@ -14,7 +13,6 @@ export default function Home() {
       <Suspense fallback={<h2>Loading...</h2>}>
         <TestComponentSecond />
       </Suspense>
-      <TestComponentThird />
     </main>
   );
 }

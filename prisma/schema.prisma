@@ -9,6 +9,19 @@ datasource db {
 }
 
 model Category {
-  id   String @id
-  name String @unique
+  id   String @id @default(uuid())
+  name String 
 }
+
+model Type {
+  id   String @id @default(uuid())
+  name String 
+}
+model Section {
+  id   String @id @default(uuid())
+  name String 
+}
+
+
+
+
