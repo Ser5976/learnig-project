@@ -1,11 +1,13 @@
-import { getTypes } from '@/lib/api/get_types';
+import { getTypes } from '../api/get_types';
 
 export default async function TestComponentSecond() {
   const types = await getTypes();
 
   return (
     <div className=" container text-amber-800 border border-amber-600 p-5 ">
-      <h1 className=" py-2 text-xl"> Component second</h1>
+      <h1 className=" py-2 text-xl">
+        Получение данных на сервере при помощи fech
+      </h1>
       {!types ? (
         <p className="text-red-600  text-sm font-medium mt-1">
           ⚠️ Что пошло не так

@@ -10,18 +10,15 @@ datasource db {
 
 model Category {
   id   String @id @default(uuid())
-  name String 
+  name String
 }
 
 model Type {
   id   String @id @default(uuid())
-  name String 
+  name String
 }
+
 model Section {
   id   String @id @default(uuid())
-  name String 
+  name String
 }
-
-
-
-

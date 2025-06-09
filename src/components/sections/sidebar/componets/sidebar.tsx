@@ -9,14 +9,14 @@ export default function Sidebar() {
 
   const navItems = [
     { href: '/', icon: <FiHome size={20} />, label: 'Главная' },
-    { href: '/profile', icon: <FiUser size={20} />, label: 'Профиль' },
+    { href: '/category', icon: <FiUser size={20} />, label: 'Категория' },
     { href: '#', icon: <FiFileText size={20} />, label: 'Документы' },
     { href: '#', icon: <FiMail size={20} />, label: 'Сообщения' },
     { href: '#', icon: <FiSettings size={20} />, label: 'Настройки' },
   ];
 
   return (
-    <aside className="  w-64 bg-white shadow-md  ">
+    <aside className="  w-64 bg-white  ">
       {/* Логотип */}
       <div className="p-4 border-b border-gray-100">
         <h1 className="text-xl font-bold text-amber-600">MyApp</h1>
@@ -42,14 +42,6 @@ export default function Sidebar() {
           ))}
         </ul>
       </nav>
-
-      {/* Нижний блок (опционально) */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-100">
-        <div className="flex items-center space-x-3 text-gray-500">
-          <div className="w-8 h-8 rounded-full bg-gray-300"></div>
-          <span>Пользователь</span>
-        </div>
-      </div>
     </aside>
   );
 }

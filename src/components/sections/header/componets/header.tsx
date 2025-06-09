@@ -1,7 +1,10 @@
 // components/Header.tsx
+import { getCategories } from '@/lib/sahared-data/get-categories';
 import Link from 'next/link';
 
-export default function Header() {
+export default async function Header() {
+  const categories = await getCategories();
+  console.log('render hedera');
   return (
     <header className="bg-white shadow-sm sticky top-0 z-10">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -12,30 +15,25 @@ export default function Header() {
 
         {/* Навигация */}
         <nav className="hidden md:flex space-x-8">
-          <Link
-            href="/"
-            className="text-gray-700 hover:text-amber-600 transition-colors font-medium"
-          >
-            Home
-          </Link>
-          <Link
-            href="#"
-            className="text-gray-700 hover:text-amber-600 transition-colors font-medium"
-          >
-            About
-          </Link>
-          <Link
-            href="#"
-            className="text-gray-700 hover:text-amber-600 transition-colors font-medium"
-          >
-            Services
-          </Link>
-          <Link
-            href="#"
-            className="text-gray-700 hover:text-amber-600 transition-colors font-medium"
-          >
-            Contact
-          </Link>
+          {!categories ? (
+            <p className="text-red-600  text-sm font-medium mt-1">
+              ⚠️ Что пошло не так
+            </p>
+          ) : categories.length === 0 ? (
+            <p className="text-lg  text-gray-500">Данных нет</p>
+          ) : (
+            categories.map((category) => {
+              return (
+                <Link
+                  key={category.id}
+                  href="#"
+                  className="text-gray-700 hover:text-amber-600 transition-colors font-medium"
+                >
+                  {category.name}
+                </Link>
+              );
+            })
+          )}
         </nav>
 
         {/* Кнопки действий */}
