@@ -18,7 +18,7 @@ export function CreateCategoryButton() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>
+        <Button className=" cursor-pointer">
           <Plus className="h-4 w-4 mr-2" />
           Создать категорию
         </Button>

@@ -1,7 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Trash2 } from 'lucide-react';
+import { MdDelete } from 'react-icons/md';
 import { deleteCategoryAction } from '../actions';
 import { toast } from 'react-toastify';
 
@@ -23,9 +22,8 @@ export function DeleteCategoryButton({
   };
 
   return (
-    <Button variant="destructive" size="icon" onClick={handleDelete}>
-      <Trash2 color="black" className="h-4 w-4" />
-      <span className="sr-only">Удалить</span>
-    </Button>
+    <button onClick={handleDelete} className="p-0">
+      <MdDelete size={18} className="cursor-pointer" />
+    </button>
   );
 }

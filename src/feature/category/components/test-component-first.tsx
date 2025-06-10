@@ -26,7 +26,7 @@ export default async function TestComponentFirst() {
               className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="text-lg font-medium">{category.name}</div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 justify-baseline">
                 <ModalUpdateCategory category={category} />
                 <DeleteCategoryButton categoryId={category.id} />
               </div>
