@@ -15,7 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { formSchema } from '../validation';
 import { Category } from '@prisma/client';
-import { updateCategoryAction } from './actions';
+import { updateCategoryAction, createCategoryAction } from '../actions';
 import { toast } from 'react-toastify';
 
 type CategoryFormProps = {
@@ -32,18 +32,23 @@ export function CategoryForm({ setIsOpen, category }: CategoryFormProps) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (category) {
-      const udateData = { categoryId: category.id, name: values.name };
-      try {
-        updateCategoryAction(udateData);
-        toast.success('Youre avatar has been changed');
-        setIsOpen(false);
-      } catch (error) {
-        console.log(error);
-        toast.error('Something went wrong');
+    try {
+      if (category) {
+        // Update existing category
+        await updateCategoryAction({
+          categoryId: category.id,
+          name: values.name,
+        });
+        toast.success('Категория успешно обновлена');
+      } else {
+        // Create new category
+        await createCategoryAction({ name: values.name });
+        toast.success('Категория успешно создана');
       }
-    } else {
       setIsOpen(false);
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Произошла ошибка при сохранении категории');
     }
   }
 
@@ -58,15 +63,15 @@ export function CategoryForm({ setIsOpen, category }: CategoryFormProps) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Имя пользователя</FormLabel>
+              <FormLabel>Название категории</FormLabel>
               <FormControl>
-                <Input placeholder="Введите имя" {...field} />
+                <Input placeholder="Введите название категории" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Отправить</Button>
+        <Button type="submit">{category ? 'Обновить' : 'Создать'}</Button>
       </form>
     </Form>
   );

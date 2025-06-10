@@ -1,14 +1,12 @@
 import TestComponentFirst from '@/feature/category/components/test-component-first';
 import { Suspense } from 'react';
 
-export const dynamic = 'force-dynamic';
-
-export default function Category() {
+export default async function CategoryPage() {
   return (
-    <main className=" flex flex-col gap-2 ">
-      <Suspense fallback={<h2>Loading...</h2>}>
+    <div className="container mx-auto py-8">
+      <Suspense fallback={<h1>Loading...</h1>}>
         <TestComponentFirst />
       </Suspense>
-    </main>
+    </div>
   );
 }
