@@ -17,6 +17,8 @@ import { formSchema } from '../validation';
 import { Category } from '@prisma/client';
 import { updateCategoryAction, createCategoryAction } from '../actions';
 import { toast } from 'react-toastify';
+import { useTransition } from 'react';
+import { Loader2 } from 'lucide-react';
 
 type CategoryFormProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,6 +26,8 @@ type CategoryFormProps = {
 };
 
 export function CategoryForm({ setIsOpen, category }: CategoryFormProps) {
+  const [isPending, startTransition] = useTransition();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,19 +37,21 @@ export function CategoryForm({ setIsOpen, category }: CategoryFormProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      if (category) {
-        // Update existing category
-        await updateCategoryAction({
-          categoryId: category.id,
-          name: values.name,
-        });
-        toast.success('Категория успешно обновлена');
-      } else {
-        // Create new category
-        await createCategoryAction({ name: values.name });
-        toast.success('Категория успешно создана');
-      }
-      setIsOpen(false);
+      startTransition(async () => {
+        if (category) {
+          // Update existing category
+          await updateCategoryAction({
+            categoryId: category.id,
+            name: values.name,
+          });
+          toast.success('Категория успешно обновлена');
+        } else {
+          // Create new category
+          await createCategoryAction({ name: values.name });
+          toast.success('Категория успешно создана');
+        }
+        setIsOpen(false);
+      });
     } catch (error) {
       console.error('Error:', error);
       toast.error('Произошла ошибка при сохранении категории');
@@ -71,7 +77,18 @@ export function CategoryForm({ setIsOpen, category }: CategoryFormProps) {
             </FormItem>
           )}
         />
-        <Button type="submit">{category ? 'Обновить' : 'Создать'}</Button>
+        <Button type="submit" disabled={isPending}>
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              {category ? 'Обновление...' : 'Создание...'}
+            </>
+          ) : category ? (
+            'Обновить'
+          ) : (
+            'Создать'
+          )}
+        </Button>
       </form>
     </Form>
   );
