@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { formSchema } from '../validation';
+import { createCategorySchema } from '../validation';
 import { Category } from '@prisma/client';
 import { updateCategoryAction, createCategoryAction } from '../actions';
 import { toast } from 'react-toastify';
@@ -28,14 +28,14 @@ type CategoryFormProps = {
 export function CategoryForm({ setIsOpen, category }: CategoryFormProps) {
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof createCategorySchema>>({
+    resolver: zodResolver(createCategorySchema),
     defaultValues: {
       name: category ? category.name : '',
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof createCategorySchema>) {
     try {
       startTransition(async () => {
         if (category) {
@@ -54,7 +54,11 @@ export function CategoryForm({ setIsOpen, category }: CategoryFormProps) {
       });
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Произошла ошибка при сохранении категории');
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : 'Произошла ошибка при сохранении категории'
+      );
     }
   }
 
