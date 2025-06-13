@@ -10,7 +10,7 @@ export default function Sidebar() {
   const navItems = [
     { href: '/', icon: <FiHome size={20} />, label: 'Главная' },
     { href: '/category', icon: <FiUser size={20} />, label: 'Категория' },
-    { href: '#', icon: <FiFileText size={20} />, label: 'Документы' },
+    { href: '/type', icon: <FiFileText size={20} />, label: 'Типы' },
     { href: '#', icon: <FiMail size={20} />, label: 'Сообщения' },
     { href: '#', icon: <FiSettings size={20} />, label: 'Настройки' },
   ];

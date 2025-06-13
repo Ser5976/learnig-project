@@ -6,14 +6,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Category } from '@prisma/client';
-
+import { Type } from '@prisma/client';
 import { useState } from 'react';
-import { CategoryForm } from './form-category';
+import { TypeForm } from './form-type';
 import { MdEdit } from 'react-icons/md';
 import { Button } from '@/components/ui/button';
 
-export const ModalUpdateCategory = ({ category }: { category: Category }) => {
+export const ModalUpdateType = ({ type }: { type: Type }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -28,9 +27,9 @@ export const ModalUpdateCategory = ({ category }: { category: Category }) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Updating the category</DialogTitle>
+          <DialogTitle>Редактирование типа</DialogTitle>
         </DialogHeader>
-        <CategoryForm setIsOpen={setIsOpen} category={category} />
+        <TypeForm setIsOpen={setIsOpen} type={type} />
       </DialogContent>
     </Dialog>
   );

@@ -10,24 +10,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { CategoryForm } from './form-category';
+import { TypeForm } from './form-type';
 
-export function CreateCategoryButton() {
+export function CreateTypeButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className=" cursor-pointer shadow-sm hover:shadow-md">
+        <Button className="cursor-pointer shadow-sm hover:shadow-md">
           <Plus className="h-4 w-4 mr-2" />
-          Создать категорию
+          Создать тип
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Создать новую категорию</DialogTitle>
+          <DialogTitle>Создать новый тип</DialogTitle>
         </DialogHeader>
-        <CategoryForm setIsOpen={setIsOpen} />
+        <TypeForm setIsOpen={setIsOpen} />
       </DialogContent>
     </Dialog>
   );

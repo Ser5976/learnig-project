@@ -1,4 +1,4 @@
-import { getTypes } from '../api/get_types';
+import { getTypes } from '../../../lib/sahared-data/get_types';
 
 export default async function TestComponentSecond() {
   const types = await getTypes();

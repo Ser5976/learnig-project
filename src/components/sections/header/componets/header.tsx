@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default async function Header() {
   const categories = await getCategories();
-  console.log('render hedera');
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-10">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">

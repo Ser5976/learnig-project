@@ -2,8 +2,6 @@ import TestComponentSecond from '@/feature/home/components/test-component-second
 import TestComponentThird from '@/feature/home/components/test-component-third';
 import { Suspense } from 'react';
 
-export const dynamic = 'force-dynamic';
-
 export default function Home() {
   return (
     <main className=" flex flex-col gap-2 ">

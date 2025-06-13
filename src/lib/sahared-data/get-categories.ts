@@ -3,7 +3,7 @@ import { prismabd } from '../../../prisma/prismadb';
 
 export const getCategories = unstable_cache(
   async () => {
-    console.log('Выполняется запрос к БД');
+    console.log('Выполняется запрос к БД, getCategories');
     try {
       const categories = await prismabd.category.findMany();
       return categories;
@@ -14,6 +14,6 @@ export const getCategories = unstable_cache(
   ['category'],
   {
     tags: ['category'],
-    revalidate: 60,
+    revalidate: 3600,
   }
 );

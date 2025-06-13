@@ -3,29 +3,25 @@
 import { useTransition } from 'react';
 import { MdDelete } from 'react-icons/md';
 import { Button } from '@/components/ui/button';
-import { deleteCategoryAction } from '../actions';
+import { deleteTypeAction } from '../actions';
 import { toast } from 'react-toastify';
 import { Loader2 } from 'lucide-react';
 
-interface DeleteCategoryButtonProps {
-  categoryId: string;
+interface DeleteTypeButtonProps {
+  typeId: string;
 }
 
-export const DeleteCategoryButton = ({
-  categoryId,
-}: DeleteCategoryButtonProps) => {
+export const DeleteTypeButton = ({ typeId }: DeleteTypeButtonProps) => {
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = () => {
     startTransition(async () => {
       try {
-        await deleteCategoryAction({ categoryId });
-        toast.success('Категория успешно удалена');
+        await deleteTypeAction({ typeId });
+        toast.success('Тип успешно удален');
       } catch (error) {
         toast.error(
-          error instanceof Error
-            ? error.message
-            : 'Ошибка при удалении категории'
+          error instanceof Error ? error.message : 'Ошибка при удалении типа'
         );
       }
     });
