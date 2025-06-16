@@ -11,7 +11,7 @@ export default function Sidebar() {
     { href: '/', icon: <FiHome size={20} />, label: 'Главная' },
     { href: '/category', icon: <FiUser size={20} />, label: 'Категория' },
     { href: '/type', icon: <FiFileText size={20} />, label: 'Типы' },
-    { href: '#', icon: <FiMail size={20} />, label: 'Сообщения' },
+    { href: '/section', icon: <FiMail size={20} />, label: 'Секции' },
     { href: '#', icon: <FiSettings size={20} />, label: 'Настройки' },
   ];
 

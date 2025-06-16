@@ -8,7 +8,8 @@ export const getCategories = unstable_cache(
       const categories = await prismabd.category.findMany();
       return categories;
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching categories:', error);
+      return [];
     }
   },
   ['category'],

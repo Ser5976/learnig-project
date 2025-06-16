@@ -1,5 +1,6 @@
-import TestComponentSecond from '@/feature/home/components/test-component-second';
-import TestComponentThird from '@/feature/home/components/test-component-third';
+import TestComponentClient from '@/features/home/components/test-component-client';
+import TestComponentSecond from '@/features/home/components/test-component-server';
+
 import { Suspense } from 'react';
 
 export default function Home() {
@@ -8,7 +9,7 @@ export default function Home() {
       <Suspense fallback={<h2>Loading...</h2>}>
         <TestComponentSecond />
       </Suspense>
-      <TestComponentThird />
+      <TestComponentClient />
     </main>
   );
 }

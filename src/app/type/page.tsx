@@ -1,4 +1,4 @@
-import TypeComponent from '@/feature/type/components/type-component';
+import TypeComponent from '@/features/type/components/type-component';
 import { Suspense } from 'react';
 
 export default function TypePage() {
