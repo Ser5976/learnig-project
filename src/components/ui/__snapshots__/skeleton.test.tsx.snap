@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Skeleton Component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-accent animate-pulse rounded-md"
+    data-slot="skeleton"
+  />
+</DocumentFragment>
+`;
