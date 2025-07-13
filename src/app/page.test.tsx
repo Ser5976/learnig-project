@@ -19,7 +19,7 @@ describe('Page', () => {
         <Home />
       </QueryClientProvider>
     );
-
+    screen.debug();
     const heading = screen.getByRole('heading', { level: 1 });
     expect(heading).toBeInTheDocument();
     // Проверяем, что серверный компонент замокан

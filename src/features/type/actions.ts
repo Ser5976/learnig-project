@@ -1,25 +1,21 @@
 'use server';
 
 import { revalidateTag } from 'next/cache';
-import { prismabd } from '../../../prisma/prismadb';
 import {
-  createTypeSchema,
-  updateTypeSchema,
-  deleteTypeSchema,
   type CreateTypeInput,
   type UpdateTypeInput,
   type DeleteTypeInput,
 } from './validation';
 import { revalidatePath } from 'next/cache';
+import {
+  createTypeService,
+  deleteTypeService,
+  updateTypeService,
+} from './services';
 
 export const createTypeAction = async (data: CreateTypeInput) => {
   try {
-    // Валидация входных данных
-    const validatedData = createTypeSchema.parse(data);
-
-    await prismabd.type.create({
-      data: { name: validatedData.name },
-    });
+    await createTypeService(data);
     revalidatePath('/');
     revalidateTag('type');
   } catch (error) {
@@ -32,13 +28,7 @@ export const createTypeAction = async (data: CreateTypeInput) => {
 
 export const updateTypeAction = async (data: UpdateTypeInput) => {
   try {
-    // Валидация входных данных
-    const validatedData = updateTypeSchema.parse(data);
-
-    await prismabd.type.update({
-      where: { id: validatedData.typeId },
-      data: { name: validatedData.name },
-    });
+    await updateTypeService(data);
     revalidatePath('/');
     revalidateTag('type');
   } catch (error) {
@@ -51,12 +41,7 @@ export const updateTypeAction = async (data: UpdateTypeInput) => {
 
 export const deleteTypeAction = async (data: DeleteTypeInput) => {
   try {
-    // Валидация входных данных
-    const validatedData = deleteTypeSchema.parse(data);
-
-    await prismabd.type.delete({
-      where: { id: validatedData.typeId },
-    });
+    await deleteTypeService(data);
     revalidatePath('/');
     revalidateTag('type');
   } catch (error) {

@@ -9,7 +9,8 @@ describe('Input Component', () => {
   });
 
   it('displays passed value', () => {
-    render(<Input value="Test" />);
+    const onChange = jest.fn();
+    render(<Input value="Test" onChange={onChange} />);
     expect(screen.getByRole('textbox')).toHaveValue('Test');
   });
 

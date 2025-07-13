@@ -3,8 +3,8 @@ import { z } from 'zod';
 export const createSectionSchema = z.object({
   name: z
     .string()
-    .min(1, 'Название обязательно')
-    .max(50, 'Название не должно превышать 50 символов')
+    .min(2, 'Имя должно быть минимум 2 символа')
+    .max(50, 'Имя слишком длинное')
     .trim(),
 });
 
@@ -12,8 +12,8 @@ export const updateSectionSchema = z.object({
   id: z.string().uuid('Неверный формат ID'),
   name: z
     .string()
-    .min(1, 'Название обязательно')
-    .max(50, 'Название не должно превышать 50 символов')
+    .min(2, 'Имя должно быть минимум 2 символа')
+    .max(50, 'Имя слишком длинное')
     .trim(),
 });
 

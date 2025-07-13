@@ -1,8 +1,7 @@
 import { Section } from '@prisma/client';
-
-import { axiosInstance } from '@/lib/axios';
+import axios from 'axios';
 
 export async function getSections(): Promise<Section[]> {
-  const { data } = await axiosInstance.get<Section[]>('/sections');
+  const { data } = await axios.get<Section[]>('/api/sections');
   return data;
 }

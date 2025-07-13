@@ -12,7 +12,11 @@ export default function Sidebar() {
     { href: '/category', icon: <FiUser size={20} />, label: 'Категория' },
     { href: '/type', icon: <FiFileText size={20} />, label: 'Типы' },
     { href: '/section', icon: <FiMail size={20} />, label: 'Секции' },
-    { href: '#', icon: <FiSettings size={20} />, label: 'Настройки' },
+    {
+      href: '/for-testing',
+      icon: <FiSettings size={20} />,
+      label: 'Для тестирования',
+    },
   ];
 
   return (

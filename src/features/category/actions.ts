@@ -1,25 +1,21 @@
 'use server';
 
 import { revalidateTag } from 'next/cache';
-import { prismabd } from '../../../prisma/prismadb';
 import {
-  createCategorySchema,
-  updateCategorySchema,
-  deleteCategorySchema,
   type CreateCategoryInput,
   type UpdateCategoryInput,
   type DeleteCategoryInput,
 } from './validation';
 import { revalidatePath } from 'next/cache';
+import {
+  createCategoryService,
+  deleteCategoryService,
+  updateCategoryService,
+} from './services';
 
 export const createCategoryAction = async (data: CreateCategoryInput) => {
   try {
-    // Валидация входных данных
-    const validatedData = createCategorySchema.parse(data);
-
-    await prismabd.category.create({
-      data: { name: validatedData.name },
-    });
+    await createCategoryService(data);
     revalidatePath('/');
     revalidateTag('category');
   } catch (error) {
@@ -32,13 +28,7 @@ export const createCategoryAction = async (data: CreateCategoryInput) => {
 
 export const updateCategoryAction = async (data: UpdateCategoryInput) => {
   try {
-    // Валидация входных данных
-    const validatedData = updateCategorySchema.parse(data);
-
-    await prismabd.category.update({
-      where: { id: validatedData.categoryId },
-      data: { name: validatedData.name },
-    });
+    await updateCategoryService(data);
     revalidatePath('/');
     revalidateTag('category');
 
@@ -53,12 +43,7 @@ export const updateCategoryAction = async (data: UpdateCategoryInput) => {
 
 export const deleteCategoryAction = async (data: DeleteCategoryInput) => {
   try {
-    // Валидация входных данных
-    const validatedData = deleteCategorySchema.parse(data);
-
-    await prismabd.category.delete({
-      where: { id: validatedData.categoryId },
-    });
+    await deleteCategoryService(data);
     revalidatePath('/');
     revalidateTag('category');
   } catch (error) {
