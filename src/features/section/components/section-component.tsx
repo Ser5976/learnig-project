@@ -24,9 +24,9 @@ export function SectionComponent() {
       ) : sections?.length === 0 ? (
         <p className="text-lg text-gray-500">Данных нет</p>
       ) : (
-        <div className="space-y-4">
+        <ul className="space-y-4">
           {sections?.map((section) => (
-            <div
+            <li
               key={section.id}
               className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
             >
@@ -38,9 +38,9 @@ export function SectionComponent() {
                   sectionName={section.name}
                 />
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );
