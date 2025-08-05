@@ -1,9 +1,9 @@
+import { getTypes } from '@/server/types/getTypes';
 import { NextResponse } from 'next/server';
-import { prismabd } from '../../../../prisma/prismadb';
 
 export async function GET() {
   try {
-    const types = await prismabd.type.findMany();
+    const types = await getTypes();
     return NextResponse.json(types);
   } catch (error) {
     console.log(error);
