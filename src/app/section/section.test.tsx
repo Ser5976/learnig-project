@@ -1,11 +1,5 @@
 // src/app/section/section.test.tsx
-import {
-  render,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
-  within,
-} from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SectionsPage from './page';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -215,7 +209,7 @@ describe('SectionsPage', () => {
     it('должен показывать ошибку при сбое создания', async () => {
       // ARRANGE (Подготовка): Рендерим компонент.
       const { user } = renderWithClient(<SectionsPage />);
-      
+
       // ACT (Действие): Открываем модальное окно и вводим данные.
       await user.click(screen.getByRole('button', { name: /Создать секцию/i }));
       await user.type(await screen.findByLabelText(/Название/i), 'test');
@@ -237,7 +231,7 @@ describe('SectionsPage', () => {
     it('должен показывать ошибку при сбое редактирования', async () => {
       // ARRANGE (Подготовка): Рендерим компонент.
       const { user } = renderWithClient(<SectionsPage />);
-      
+
       // ACT (Действие): Открываем модальное окно редактирования и вводим данные.
       const li = (await screen.findByText(mockData[0].name)).closest('li')!;
       await user.click(
@@ -264,7 +258,7 @@ describe('SectionsPage', () => {
     it('должен показывать ошибку при сбое удаления', async () => {
       // ARRANGE (Подготовка): Рендерим компонент.
       const { user } = renderWithClient(<SectionsPage />);
-      
+
       // ACT (Действие): Открываем диалоговое окно удаления.
       const li = (await screen.findByText(mockData[1].name)).closest('li')!;
       await user.click(within(li).getByRole('button', { name: /Удалить/i }));
