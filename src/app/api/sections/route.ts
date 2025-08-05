@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
-import { prismabd } from '../../../../prisma/prismadb';
-import { createSectionSchema } from '@/validation/section-validation';
+import { getSections } from '@/server/sections/getSections';
+import { handleCreateSection } from '@/server/sections/handleCreateSection';
+import { ValidationError, DbError } from '@/server/errors';
 
 export async function GET() {
   try {
-    const sections = await prismabd.section.findMany();
+    const sections = await getSections();
     return NextResponse.json(sections);
   } catch (error) {
     console.error('Error fetching sections:', error);
@@ -18,29 +19,18 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-
-    // Валидация входных данных
-    const validationResult = createSectionSchema.safeParse(body);
-    if (!validationResult.success) {
+    const section = await handleCreateSection(body);
+    return NextResponse.json(section);
+  } catch (error) {
+    if (error instanceof ValidationError) {
       return NextResponse.json(
-        {
-          error: 'Validation error',
-          details: validationResult.error.format(),
-        },
+        { error: error.message, details: error.details },
         { status: 400 }
       );
     }
-
-    const section = await prismabd.section.create({
-      data: validationResult.data,
-    });
-
-    return NextResponse.json(section);
-  } catch (error) {
-    console.error('Error creating section:', error);
-    return NextResponse.json(
-      { error: 'Failed to create section' },
-      { status: 500 }
-    );
+    if (error instanceof DbError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Unknown error' }, { status: 500 });
   }
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { prismabd } from '../../../../../prisma/prismadb';
-import { updateSectionSchema } from '@/validation/section-validation';
+import { handleUpdateSection } from '@/server/sections/handleUpdateSection';
+import { handleDeleteSection } from '@/server/sections/handleDeleteSection';
 
 type RouteParams = {
   params: Promise<{ id: string }>;
@@ -12,24 +12,7 @@ export async function PUT(request: Request, { params }: RouteParams) {
   try {
     const body = await request.json();
 
-    // Валидация входных данных
-    const validationResult = updateSectionSchema.safeParse({ id, ...body });
-    if (!validationResult.success) {
-      return NextResponse.json(
-        {
-          error: 'Validation error',
-          details: validationResult.error.format(),
-        },
-        { status: 400 }
-      );
-    }
-
-    const section = await prismabd.section.update({
-      where: { id },
-      data: {
-        name: validationResult.data.name,
-      },
-    });
+    const section = await handleUpdateSection({ id, ...body });
     return NextResponse.json(section);
   } catch (error) {
     console.error('Error updating section:', error);
@@ -44,10 +27,8 @@ export async function DELETE(request: Request, { params }: RouteParams) {
   const { id } = await params;
 
   try {
-    await prismabd.section.delete({
-      where: { id },
-    });
-    return NextResponse.json({ success: true });
+    const section = await handleDeleteSection({ id });
+    return NextResponse.json(section);
   } catch (error) {
     console.error('Error deleting section:', error);
     return NextResponse.json(
