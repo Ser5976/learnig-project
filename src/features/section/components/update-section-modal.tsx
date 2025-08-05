@@ -22,6 +22,7 @@ export function UpdateSectionModal({ section }: { section: Section }) {
         <Button
           variant="ghost"
           size="icon"
+          aria-label="Редактировать"
           className="h-8 w-8 p-0 shadow-sm hover:shadow-md cursor-pointer"
         >
           <MdEdit size={20} />
