@@ -23,6 +23,7 @@ export default async function TypeComponent() {
           {types.map((type) => (
             <div
               key={type.id}
+              data-testid="type-card"
               className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="text-lg font-medium">{type.name}</div>

@@ -36,8 +36,8 @@ export function TypeForm({ setIsOpen, type }: TypeFormProps) {
   });
 
   async function onSubmit(values: z.infer<typeof createTypeSchema>) {
-    try {
-      startTransition(async () => {
+    startTransition(async () => {
+      try {
         if (type) {
           // Update existing type
           await updateTypeAction({
@@ -51,15 +51,12 @@ export function TypeForm({ setIsOpen, type }: TypeFormProps) {
           toast.success('Тип успешно создан');
         }
         setIsOpen(false);
-      });
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : 'Произошла ошибка при сохранении типа'
-      );
-    }
+      } catch (error) {
+        toast.error(
+          error instanceof Error ? error.message : 'Ошибка при сохранении'
+        );
+      }
+    });
   }
 
   return (

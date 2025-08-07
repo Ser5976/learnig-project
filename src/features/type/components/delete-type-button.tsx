@@ -21,7 +21,7 @@ export const DeleteTypeButton = ({ typeId }: DeleteTypeButtonProps) => {
         toast.success('Тип успешно удален');
       } catch (error) {
         toast.error(
-          error instanceof Error ? error.message : 'Ошибка при удалении типа'
+          error instanceof Error ? error.message : 'Ошибка при удалении'
         );
       }
     });
@@ -33,6 +33,7 @@ export const DeleteTypeButton = ({ typeId }: DeleteTypeButtonProps) => {
       size="icon"
       onClick={handleDelete}
       disabled={isPending}
+      aria-label="Удалить тип"
       className="h-8 w-8 p-0 shadow-sm hover:shadow-md cursor-pointer"
     >
       {isPending ? (
