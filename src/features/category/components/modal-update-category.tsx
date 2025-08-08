@@ -20,6 +20,7 @@ export const ModalUpdateCategory = ({ category }: { category: Category }) => {
       <DialogTrigger asChild>
         <Button
           variant="ghost"
+          aria-label="Редактировать категорию"
           size="icon"
           className="h-8 w-8 p-0 shadow-sm hover:shadow-md cursor-pointer"
         >

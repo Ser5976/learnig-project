@@ -36,6 +36,7 @@ export const DeleteCategoryButton = ({
       variant="ghost"
       size="icon"
       onClick={handleDelete}
+      aria-label="Удалить категорию"
       disabled={isPending}
       className="h-8 w-8 p-0 shadow-sm hover:shadow-md cursor-pointer"
     >

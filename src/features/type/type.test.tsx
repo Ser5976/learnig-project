@@ -3,7 +3,7 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 // Импортируем userEvent для симуляции действий пользователя
 import userEvent from '@testing-library/user-event';
 // Импортируем тестируемый компонент
-import TypeComponent from '@/features/type/components/type-component';
+import TypeComponent from './components/type-component';
 // Импортируем функцию для получения данных, которую будем мокировать
 import { getTypes } from '@/lib/sahared-data/get_types';
 // Импортируем серверные действия, которые также будем мокировать
@@ -11,7 +11,7 @@ import {
   createTypeAction,
   deleteTypeAction,
   updateTypeAction,
-} from '@/features/type/actions';
+} from './actions';
 // Импортируем toast для проверки уведомлений
 import { toast } from 'react-toastify';
 // Импортируем ReactElement для корректной типизации при перерисовке
@@ -145,7 +145,9 @@ describe('TypeComponent', () => {
       await user.click(screen.getByRole('button', { name: 'Обновить' }));
 
       await waitFor(() => {
-        expect(mockedToast.success).toHaveBeenCalledWith('Тип успешно обновлен');
+        expect(mockedToast.success).toHaveBeenCalledWith(
+          'Тип успешно обновлен'
+        );
       });
 
       const updatedJsx = await TypeComponent();

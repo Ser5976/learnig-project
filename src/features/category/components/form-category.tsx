@@ -36,8 +36,8 @@ export function CategoryForm({ setIsOpen, category }: CategoryFormProps) {
   });
 
   async function onSubmit(values: z.infer<typeof createCategorySchema>) {
-    try {
-      startTransition(async () => {
+    startTransition(async () => {
+      try {
         if (category) {
           // Update existing category
           await updateCategoryAction({
@@ -51,15 +51,15 @@ export function CategoryForm({ setIsOpen, category }: CategoryFormProps) {
           toast.success('Категория успешно создана');
         }
         setIsOpen(false);
-      });
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : 'Произошла ошибка при сохранении категории'
-      );
-    }
+      } catch (error) {
+        console.error('Error:', error);
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : 'Произошла ошибка при сохранении категории'
+        );
+      }
+    });
   }
 
   return (
