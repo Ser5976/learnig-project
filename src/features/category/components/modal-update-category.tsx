@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Category } from '@prisma/client';
+import type { Category } from '@prisma/client';
 
 import { useState } from 'react';
 import { CategoryForm } from './form-category';

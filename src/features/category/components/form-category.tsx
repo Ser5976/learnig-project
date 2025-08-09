@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { createCategorySchema } from '../validation';
-import { Category } from '@prisma/client';
+import type { Category } from '@prisma/client';
 import { updateCategoryAction, createCategoryAction } from '../actions';
 import { toast } from 'react-toastify';
 import { useTransition } from 'react';

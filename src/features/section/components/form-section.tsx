@@ -15,7 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { toast } from 'react-toastify';
 import { Loader2 } from 'lucide-react';
-import { Section } from '@prisma/client';
+import type { Section } from '@prisma/client';
 import { createSectionSchema } from '@/validation/section-validation';
 import { useUpdateSection } from '../hooks/useUpdateSection';
 import { useCreateSection } from '../hooks/useCreateSection';

@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Type } from '@prisma/client';
+import type { Type } from '@prisma/client';
 import { useState } from 'react';
 import { TypeForm } from './form-type';
 import { MdEdit } from 'react-icons/md';
