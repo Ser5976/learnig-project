@@ -64,7 +64,9 @@ test.describe('TypePage Full Lifecycle E2E Test', () => {
         .filter({ hasText: newTypeName });
 
       // 2. Нажимаем кнопку "Редактировать"
-      await typeCard.getByRole('button', { name: /Редактировать тип/i }).click();
+      await typeCard
+        .getByRole('button', { name: /Редактировать тип/i })
+        .click();
 
       // 3. Проверяем, что появилось модальное окно
       const updateModal = page.getByRole('heading', {

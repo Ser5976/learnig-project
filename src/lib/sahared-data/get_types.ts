@@ -14,7 +14,7 @@ export const getTypes = async (): Promise<Type[] | undefined> => {
     //throw new Error('Failed to fetch data');
     return undefined;
   }
-  const types = res.json();
+  const types = await res.json();
 
   return types;
 };
