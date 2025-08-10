@@ -1,5 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
-
+import { defineConfig } from '@playwright/test';
 
 // Используйте dotenv для чтения переменных окружения из .env файла
 // require('dotenv').config();
@@ -27,22 +26,22 @@ export default defineConfig({
   },
 
   /* Конфигурация для отдельных проектов */
-  projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+  // projects: [
+  //   {
+  //     name: 'chromium',
+  //     use: { ...devices['Desktop Chrome'] },
+  //   },
 
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
+  //   {
+  //     name: 'firefox',
+  //     use: { ...devices['Desktop Firefox'] },
+  //   },
 
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
-  ],
+  //   {
+  //     name: 'webkit',
+  //     use: { ...devices['Desktop Safari'] },
+  //   },
+  // ],
 
   /* Запуск dev-сервера перед началом тестов */
   webServer: {
