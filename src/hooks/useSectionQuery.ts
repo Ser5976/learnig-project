@@ -7,7 +7,7 @@ export const useSectionQuery = () => {
     queryFn: () => getSections(),
     staleTime: 1000 * 60 * 5, // Данные считаются свежими 5 минут
     gcTime: 1000 * 60 * 30, // Время хранения в кэше 30 минут
-    refetchOnMount: false, // Не обновлять при монтировании
-    refetchOnReconnect: false, // Не обновлять при переподключении
+    // refetchOnMount: false, // Убираем эту настройку
+    //refetchOnReconnect: false, // Не обновлять при переподключении
   });
 };

@@ -72,7 +72,7 @@ export function SectionForm({ setIsOpen, section }: SectionFormProps) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Название типа</FormLabel>
+              <FormLabel>Название секции</FormLabel>
               <FormControl>
                 <Input placeholder="Введите название секции" {...field} />
               </FormControl>
