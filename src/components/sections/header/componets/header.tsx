@@ -14,7 +14,7 @@ export default async function Header() {
         </Link>
 
         {/* Навигация */}
-        <nav className="hidden md:flex space-x-8">
+        <ul className="hidden md:flex space-x-8">
           {!categories ? (
             <p className="text-red-600  text-sm font-medium mt-1">
               ⚠️ Что пошло не так
@@ -24,17 +24,16 @@ export default async function Header() {
           ) : (
             categories.map((category) => {
               return (
-                <Link
+                <li
                   key={category.id}
-                  href="#"
                   className="text-gray-700 hover:text-amber-600 transition-colors font-medium"
                 >
                   {category.name}
-                </Link>
+                </li>
               );
             })
           )}
-        </nav>
+        </ul>
 
         {/* Кнопки действий */}
         <div className="flex items-center space-x-4">
