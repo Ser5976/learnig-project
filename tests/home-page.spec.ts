@@ -93,14 +93,21 @@ test.describe('Home Page - Full E2E Test', () => {
 
       // 4. Проходим в цикле по каждой ссылке для детальной проверки.
       for (const navLink of navLinks) {
+        // Находим сайдбар, чтобы поиск ссылок был ограничен его пределами.
+        const sidebar = page.getByRole('complementary');
         // Находим ссылку по имени.
-        const link = page.getByRole('link', { name: navLink.name });
+        const link = sidebar.getByRole('link', { name: navLink.name });
 
         // Убеждаемся, что у ссылки правильный href.
         await expect(link).toHaveAttribute('href', navLink.path);
 
         // Кликаем по ссылке.
-        await link.click();
+        // await link.click();
+        // 3. Кликаем с ожиданием навигации
+        await Promise.all([
+          page.waitForURL(navLink.path, { timeout: 10000 }),
+          link.click(),
+        ]);
 
         // Проверяем, что URL страницы изменился на правильный.
         await expect(page).toHaveURL(navLink.path);

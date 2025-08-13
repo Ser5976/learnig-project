@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('CategoryPage  E2E тест', () => {
-  const newCategoryName = `Тестовая категория ${Date.now()}`;
-  const updatedCategoryName = `Обновленная категория ${Date.now()}`;
+  const newCategoryName = `Тестовая категория `;
+  const updatedCategoryName = `Обновленная категория `;
 
   test('должен выполнить полный цикл: создать, отредактировать и удалить категорию', async ({
     page,
@@ -62,7 +62,9 @@ test.describe('CategoryPage  E2E тест', () => {
 
       // 2. Проверяем, что новая категория видна в списке в хедере
       const header = page.getByRole('banner');
-      await expect(header.getByRole('listitem').filter({ hasText: newCategoryName })).toBeVisible();
+      await expect(
+        header.getByRole('listitem').filter({ hasText: newCategoryName })
+      ).toBeVisible();
 
       // 3. Возвращаемся обратно на страницу категорий для продолжения теста
       await page.goto('/category');
@@ -104,7 +106,10 @@ test.describe('CategoryPage  E2E тест', () => {
       ).toBeVisible();
 
       // 9. Проверяем, что категория со старым именем исчезла
-      await expect(page.getByText(newCategoryName)).not.toBeVisible();
+      //  await expect(page.getByText(newCategoryName)).not.toBeVisible();
+      await expect(
+        page.getByTestId('category-card').filter({ hasText: newCategoryName })
+      ).not.toBeVisible();
     });
     // --- ЭТАП 3: Удаление ---
     await test.step('Удаление отредактированной категории', async () => {

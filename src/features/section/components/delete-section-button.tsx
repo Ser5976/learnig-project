@@ -33,7 +33,7 @@ export function DeleteSectionButton({
         <Button
           variant="ghost"
           size="icon"
-          aria-label="Удалить"
+          aria-label="delete"
           className="h-8 w-8 p-0 shadow-sm hover:shadow-md cursor-pointer"
         >
           {isPending ? (

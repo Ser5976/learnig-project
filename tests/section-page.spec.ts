@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('SectionPage  E2E тест', () => {
-  const newSectionName = `Тестовая секция ${Date.now()}`;
-  const updatedSectionName = `Обновленная секция ${Date.now()}`;
+  const newSectionName = `Тестовая секция`;
+  const updatedSectionName = `Обновленная секция`;
 
   test('должен выполнить полный цикл: создать, отредактировать и удалить секцию', async ({
     page,
@@ -102,7 +102,7 @@ test.describe('SectionPage  E2E тест', () => {
         .filter({ hasText: updatedSectionName });
 
       // 2. Нажимаем кнопку "Удалить" внутри этой карточки
-      await sectionCard.getByRole('button', { name: /Удалить/i }).click();
+      await sectionCard.getByRole('button', { name: /delete/i }).click();
 
       // 3. Проверяем, что появился диалог подтверждения
       await expect(

@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('TypePage Full Lifecycle E2E Test', () => {
-  const newTypeName = `Тестовый тип ${Date.now()}`;
-  const updatedTypeName = `Обновленный тип ${Date.now()}`;
+  const newTypeName = `Тестовый тип`;
+  const updatedTypeName = `Обновленный тип`;
 
   test('должен выполнить полный цикл: создать, отредактировать и удалить тип', async ({
     page,
