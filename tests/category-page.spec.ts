@@ -54,6 +54,20 @@ test.describe('CategoryPage  E2E тест', () => {
         page.getByRole('main').getByText(newCategoryName, { exact: true })
       ).toBeVisible();
     });
+
+    // --- ЭТАП 1.5: Проверка на главной странице ---
+    await test.step('Проверка отображения категории в хедере на главной странице', async () => {
+      // 1. Переходим на главную страницу
+      await page.goto('/');
+
+      // 2. Проверяем, что новая категория видна в списке в хедере
+      const header = page.getByRole('banner');
+      await expect(header.getByRole('listitem').filter({ hasText: newCategoryName })).toBeVisible();
+
+      // 3. Возвращаемся обратно на страницу категорий для продолжения теста
+      await page.goto('/category');
+    });
+
     // --- ЭТАП 2: Редактирование ---
     await test.step('Редактирование созданной категории', async () => {
       // 1. Находим карточку нашей новой категории

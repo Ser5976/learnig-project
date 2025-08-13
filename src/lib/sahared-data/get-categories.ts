@@ -1,12 +1,18 @@
-import { prismabd } from '@/prisma/prismadb';
 import { unstable_cache } from 'next/cache';
+import { prismabd } from '../../../prisma/prismadb';
+import { Category } from '@prisma/client';
 
-export const getCategories = unstable_cache(
-  async () => {
-    return prismabd.category.findMany();
-  },
-  ['categories'],
-  {
-    tags: ['categories'],
+export async function getCategoriesImpl(): Promise<Category[] | undefined> {
+  try {
+    const categories = await prismabd.category.findMany();
+    return categories;
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return undefined;
   }
-);
+}
+
+export const getCategories = unstable_cache(getCategoriesImpl, ['category'], {
+  tags: ['category'],
+  revalidate: 3600,
+});

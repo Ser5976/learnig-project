@@ -14,7 +14,10 @@ export default async function Header() {
         </Link>
 
         {/* Навигация */}
-        <ul className="hidden md:flex space-x-8">
+        <ul
+          className="hidden md:flex space-x-8"
+          data-testid="header-nav-categories"
+        >
           {!categories ? (
             <p className="text-red-600  text-sm font-medium mt-1">
               ⚠️ Что пошло не так

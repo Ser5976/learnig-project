@@ -1,116 +1,121 @@
 import { test, expect } from '@playwright/test';
-import { prismabd } from '../prisma/prismadb';
 
+// Группа тестов для главной страницы.
+// test.describe помогает организовать тесты в логические блоки.
 test.describe('Home Page - Full E2E Test', () => {
-  // Перед каждым тестом переходим на главную страницу
+  // Этот хук выполняется перед каждым тестом в этой группе.
+  // Он гарантирует, что каждый тест начинается с чистого состояния на главной странице.
   test.beforeEach(async ({ page }) => {
+    // 1. Переходим на главную страницу по корневому URL.
     await page.goto('/');
   });
 
+  // Тест для проверки базовой загрузки и наличия ключевых элементов layout.
   test('должны успешно загрузиться и отобразить заголовок, боковую панель и основное содержимое', async ({
     page,
   }) => {
-    // Проверяем заголовок страницы
+    // 1. Проверяем, что главный заголовок страницы виден.
+    // Это подтверждает, что основной контент страницы загрузился.
+    // 'getByRole' - это надежный способ находить элементы, так как он ориентирован на пользователя.
     await expect(
       page.getByRole('heading', { name: /home page/i })
     ).toBeVisible();
 
-    // Проверяем, что хедер виден
-    //Роль 'banner' соответствует шапке сайта (<header>).
+    // 2. Проверяем, что хедер (шапка сайта) виден.
+    // Роль 'banner' обычно соответствует тегу <header>.
     await expect(page.getByRole('banner')).toBeVisible();
 
-    // Проверяем, что сайдбар виден
-    //Роль 'complementary' соответствует боковой панели (<aside>).
+    // 3. Проверяем, что сайдбар (боковая панель) виден.
+    // Роль 'complementary' обычно соответствует тегу <aside>.
     await expect(page.getByRole('complementary')).toBeVisible();
   });
 
+  // Группа тестов специально для проверки хедера.
   test.describe('Header', () => {
-    test('Заголовок должен содержать рабочую ссылку «Домой»,навигационною панель с ссылками, кнопки Sign In / Sign Up', async ({
+    // Тест для проверки содержимого хедера.
+    test('Заголовок должен содержать рабочую ссылку «Домой», навигационную панель и кнопки входа/регистрации', async ({
       page,
     }) => {
+      // 1. Находим ссылку-логотип по ее роли и тексту.
       const homeLinkHeader = page.getByRole('link', { name: 'New Project' });
 
-      // Проверяем, что ссылка "New Project" в хедере видна
+      // 2. Убеждаемся, что ссылка-логотип видна на странице.
       await expect(homeLinkHeader).toBeVisible();
 
-      // Кликаем по ссылке и проверяем, что URL не изменился (т.к. мы уже на главной)
+      // 3. Кликаем по ссылке и проверяем, что URL не изменился (так как мы уже на главной).
       await homeLinkHeader.click();
       await expect(page).toHaveURL('/');
 
-      // Проверяем, что заголовок главной страницы все еще виден
-      await expect(
-        page.getByRole('heading', { name: /home page/i })
-      ).toBeVisible();
-      // Проверяем, что список отображается
-      const categoriesList = page.locator('ul.hidden.md\\:flex');
+      // 4. Проверяем, что навигационное меню категорий видимо.
+      // Используем data-testid для надежности, чтобы тест не сломался при изменении стилей.
+      const categoriesList = page.getByTestId('header-nav-categories');
       await expect(categoriesList).toBeVisible();
 
-      // Кнопки Sign In / Sign Up
+      // 5. Проверяем наличие кнопок "Sign In" и "Sign Up".
       await expect(page.getByRole('button', { name: 'Sign In' })).toBeVisible();
       await expect(page.getByRole('button', { name: 'Sign Up' })).toBeVisible();
     });
   });
-  // Проверка динамического списка категорий в header:
-  // перехвать и замокать данные e2e нельзя,так как данные по категориям мы получает при помощи прямого запроса в БД
-  // будем напрямую записывать в БД одну категорию, проверять её, потом удалять
-  test.describe('Категории заголовков с реальной базой данных', () => {
-    const testCategoryName = `Test Category ${Date.now()}`;
-    let categoryId: string;
 
-    // 1. Перед тестом создаем категорию в базе данных
-    test.beforeAll(async () => {
-      const newCategory = await prismabd.category.create({
-        data: { name: testCategoryName },
-      });
-      categoryId = newCategory.id;
-    });
-
-    // 3. После теста удаляем созданную категорию для чистоты
-    test.afterAll(async () => {
-      if (categoryId) {
-        await prismabd.category.delete({ where: { id: categoryId } });
-      }
-    });
-
-    // 2. Проверяем, что категория отображается на главной странице
-    test('должна отображаться категория из реальной базы данных', async ({
-      page,
-    }) => {
-      // Устанавливаем заголовки, чтобы отключить кэш на стороне сервера Next.js
-      await page.setExtraHTTPHeaders({
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-      });
-
-      // Переходим на главную страницу
-      await page.goto('/');
-
-      // Проверяем, что наша категория видна в списке
-      await expect(
-        page.getByRole('listitem').filter({ hasText: testCategoryName })
-      ).toBeVisible();
-    });
-  });
-
-  /* test.describe('Sidebar Navigation', () => {
+  // Группа тестов для проверки навигации в сайдбаре.
+  test.describe('Sidebar Navigation', () => {
+    // Массив с данными для навигационных ссылок.
+    // Это позволяет избежать дублирования кода и легко добавлять новые ссылки для проверки.
     const navLinks = [
-      { name: 'Категория', path: '/category', heading: /category page/i },
-      { name: 'Типы', path: '/type', heading: /type page/i },
-      { name: 'Секции', path: '/section', heading: /section page/i },
+      { name: 'Главная', path: '/', heading: /home page/i },
+      { name: 'Категория', path: '/category', heading: /категории/i },
+      { name: 'Типы', path: '/type', heading: /типы/i },
+      { name: 'Секции', path: '/section', heading: /секции/i },
+      {
+        name: 'Для тестирования',
+        path: '/for-testing',
+        heading: /for Testing/i,
+      },
     ];
 
-    for (const navLink of navLinks) {
-      test(`should navigate to the ${navLink.name} page correctly`, async ({
-        page,
-      }) => {
-        // Находим ссылку в сайдбаре и кликаем по ней
-        await page.getByRole('link', { name: navLink.name }).click();
+    // Один комплексный тест, который проверяет все аспекты навигации.
+    test('должен содержать правильные ссылки и корректно переходить по ним', async ({
+      page,
+    }) => {
+      // --- Проверка наличия и атрибутов ---
 
-        // Проверяем, что URL изменился на правильный
+      // 1. Проверяем, что заголовок меню в сайдбаре виден.
+      const headingMenu = page.getByRole('heading', { name: /MyApp/i });
+      await expect(headingMenu).toBeVisible();
+
+      // 2. Находим все навигационные элементы в списке.
+      const navItems = page.locator('nav ul li');
+
+      // 3. Убеждаемся, что количество ссылок соответствует ожидаемому.
+      await expect(navItems).toHaveCount(navLinks.length);
+
+      // --- Проверка переходов ---
+
+      // 4. Проходим в цикле по каждой ссылке для детальной проверки.
+      for (const navLink of navLinks) {
+        // Находим ссылку по имени.
+        const link = page.getByRole('link', { name: navLink.name });
+
+        // Убеждаемся, что у ссылки правильный href.
+        await expect(link).toHaveAttribute('href', navLink.path);
+
+        // Кликаем по ссылке.
+        await link.click();
+
+        // Проверяем, что URL страницы изменился на правильный.
         await expect(page).toHaveURL(navLink.path);
 
-        // Проверяем, что на новой странице виден правильный заголовок
-        await expect(page.getByRole('heading', { name: navLink.heading })).toBeVisible();
-      });
-    }
-  }); */
+        // Проверяем, что на новой странице отображается правильный заголовок.
+        // Это подтверждает, что нужная страница успешно загрузилась.
+        await expect(
+          page.getByRole('heading', { name: navLink.heading })
+        ).toBeVisible();
+
+        // Возвращаемся на главную страницу для следующей итерации (если это не последняя ссылка).
+        if (navLink.path !== '/') {
+          await page.goto('/');
+        }
+      }
+    });
+  });
 });
