@@ -182,7 +182,7 @@ describe('SectionsPage', () => {
 
       // ACT (Действие): Находим нужный элемент и нажимаем "Удалить".
       const li = (await screen.findByText(sectionToDelete.name)).closest('li')!;
-      await user.click(within(li).getByRole('button', { name: /Удалить/i }));
+      await user.click(within(li).getByRole('button', { name: /delete/i }));
 
       // ACT (Действие): В диалоговом окне подтверждаем удаление.
       const dialog = await screen.findByRole('alertdialog');
@@ -261,7 +261,7 @@ describe('SectionsPage', () => {
 
       // ACT (Действие): Открываем диалоговое окно удаления.
       const li = (await screen.findByText(mockData[1].name)).closest('li')!;
-      await user.click(within(li).getByRole('button', { name: /Удалить/i }));
+      await user.click(within(li).getByRole('button', { name: /delete/i }));
 
       // ARRANGE (Подготовка): Мокируем `deleteSection` так, чтобы он возвращал ошибку.
       const dialog = await screen.findByRole('alertdialog');
